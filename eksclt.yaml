@@ -1,0 +1,23 @@
+---
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: calico-fail-cluster
+  region: us-east-2
+
+vpc:
+  nat:
+    gateway: HighlyAvailable
+
+nodeGroups:
+  - name: ng-1
+    instanceType: t3a.small
+    desiredCapacity: 2
+    privateNetworking: true
+    maxPodsPerNode: 40
+    tags:
+      cluster_type: "debug"
+    iam:
+      withAddonPolicies:
+        albIngress: true
